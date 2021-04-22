@@ -1,0 +1,91 @@
+Demos needed in this session:
+------------------------------
+Data manipulation language
+	manipulation means, the data in the database is getting affected.
+		INSERTing
+		UPDATE
+		DELETE
+
+	all these DML operations are done on the records inside the table.
+
+Manipulation should not be confused with:
+		ALTERing the table (alter means, the structure of the table gets affected)
+
+	similarly,
+		DROPping a table means, removing the table itself from the database. That is
+		not to be confused with DELETE (DELETE means remove only records in the table NOT THE TABLE)
+
+CREATE		to create table
+ALTER		(PENDING)
+DROP		(PENDING)
+TRUNCATE	(PENDING)
+	these are data definition language.
+
+INSERT
+UPDATE
+DELETE
+	These are data manipulation language.
+
+we learnt to insert a row(s) into the table yesterday.
+	a single row
+	multiple rows using ,
+	multiple rows using sub query 	(SELECT)
+
+today,
+we are going to learn UPDATE
+UPDATE?
+	a row or multiple or all rows can be updated using UPDATE statement
+
+	UPDATE TABLENAME SET COLNAME=VALUE, COLNAME=VALUE,....	WHERE CONDITION
+
+	this is the syntax for UPDATE statement in SQL
+	If we did not give WHERE condition, then all the rows present in the table will be updated. (DANGEROUS)
+
+	if we give a condition that none of rows are satisfied, then NO ROWS are updated.
+
+	UPDATE BRANCH SET BCITY='Kolkata' WHERE BID='B00012';
+	UPDATE BRANCH SET BCITY='Vishakapatnam', BNAME='Rani street' WHERE BID='B00014';
+	UPDATE BRANCH SET BCITY='UNKNOWN';			--there is no where condition (all rows will be affected)
+
+
+
+    UPDATE BRANCH SET BCITY=(SELECT BCITY FROM BRANCH WHERE BID='B00006') WHERE BID='B00014';
+
+UPDATE BRANCH SET BCITY='New Delhi' WHERE BCITY='Delhi';
+	the above query is based on non primary key column as condition. so it may affect 0 or more rows
+
+delete:
+--------
+	we can remove row(s) from the table using 
+	DELETE statement
+	
+	if we did not give any condition, then all the rows in the table will be deleted.
+	DELETE SHOULD NOT BE CONFUSED WITH DROP TABLE STATEMENT
+
+	
+
+	DELETE FROM CUSTOMER_COPY WHERE CUSTID='C00010';	
+		this is delete using primary key columne. since primary key has unique values, a delete using primary key will delete 0 or 1 records
+		
+	DELETE FROM CUSTOMER_COPY WHERE city='Delhi';
+		here, the condition is using non key column. So, the delete operation may delete 0 or more records
+
+	DELETE FROM CUSTOMER_COPY WHERE 1=2;
+		HERE, the condition is false, so no records are deleted
+
+	DELETE FROM CUSTOMER_COPY;
+		HERE, no condition, hence all rows in the table are deleted
+
+insert into customer_copy
+select * from customer;		//i have added all the 10 records from customer table to customer_copy
+
+
+TRUNCATE customer_copy;		//TRUNCATE always remove all records from the table. WE CANNOT SPECIFY A CONDITION for TRUNCATE. so there is no choice to remove selective records using TRUNCATE.
+	In fact, TRUNCATE is a DDL (Data Definition Language) So it drops the table and creates again (so fast when compared to DELETE statement)
+
+TRUNCATE CANNOT BE ROLLED BACK	(Because, TRUNCATE is DDL. a ddl statement can never be rolled back)
+
+so, please do research on difference between DELETE and TRUNCATE
+
+We have completed Data Manipulation Language
+---------------------------------------------------------------------------------------------------------------
